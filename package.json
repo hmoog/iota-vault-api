@@ -1,0 +1,32 @@
+{
+    "name": "iota-vault-api",
+    "version": "1.0.0",
+    "description": "implementation of the iota-vault backend server",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hmoog/iota-vault-api.git"
+    },
+    "keywords": [
+        "iota",
+        "two-factor-auth",
+        "multisignature",
+        "cryptocurrency"
+    ],
+    "author": "Hans Moog",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/hmoog/iota-vault-api/issues"
+    },
+    "homepage": "https://github.com/hmoog/iota-vault-api#readme",
+    "dependencies": {
+        "md5": "^2.2.1",
+        "mongoose": "^5.0.6",
+        "node-2fa": "^1.1.2",
+        "restify": "^6.3.4",
+        "restify-errors": "^5.0.0"
+    }
+}
