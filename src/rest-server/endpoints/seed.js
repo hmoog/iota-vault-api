@@ -6,6 +6,7 @@ const md5 = require('md5');
 const twoFactor = require('node-2fa');
 const config = require('../../../config/config');
 const Seed = require('../../models/seed');
+const QRCode = require('qrcode');
 
 // create a seed
 var create = function create(req, res, next) {
@@ -34,10 +35,10 @@ var create = function create(req, res, next) {
         }
 
         // update the seed with a new two-factor-secret
-        var twoFactorAuthDetails = twoFactor.generateSecret({name: 'IOTA Vault'});
+        var twoFactorAuthDetails = twoFactor.generateSecret({name: 'MAIN WALLET'});
         seed.twoFactorAuthSecret = twoFactorAuthDetails.secret;
 
-        // save the user
+        // save the seed in the database
         seed.save(function(err) {
             if(err) {
                 console.error(err);
@@ -45,15 +46,23 @@ var create = function create(req, res, next) {
                 return next(new InternalServerError('database error'));
             }
 
-            res.send({
-                code: 'Ok',
-                data: {
-                    id: seed.id,
-                    twoFactorAuthSecret: twoFactorAuthDetails.secret
-                }
-            });
+            // generate the qrcode for the twofactor auth and send the response
+            QRCode.toDataURL(decodeURIComponent(twoFactorAuthDetails.uri) + '&issuer=' + encodeURIComponent('IOTA Vault'), { errorCorrectionLevel: 'H' }).then((qrcode) => {
+                res.send({
+                    code: 'Ok',
+                    data: {
+                        id: seed.id,
+                        twoFactorAuthSecret: twoFactorAuthDetails.secret,
+                        qrcode: qrcode
+                    }
+                });
 
-            return next(false);
+                return next(false);
+            }, (err) => {
+                console.error(err);
+
+                return next(new InternalServerError('error generating qrcode'));
+            });
         });
 
         // object of all the users

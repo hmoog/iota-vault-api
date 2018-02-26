@@ -23,9 +23,11 @@
     },
     "homepage": "https://github.com/hmoog/iota-vault-api#readme",
     "dependencies": {
+        "iota.lib.js": "^0.4.7",
         "md5": "^2.2.1",
         "mongoose": "^5.0.6",
         "node-2fa": "^1.1.2",
+        "qrcode": "^1.2.0",
         "restify": "^6.3.4",
         "restify-errors": "^5.0.0"
     }
