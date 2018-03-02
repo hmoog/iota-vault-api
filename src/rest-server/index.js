@@ -12,7 +12,6 @@ var server = restify.createServer({
     name: 'iota-vault-api'
 });
 
-console.log(restify.CORS);
 // configure our cors settings
 const cors = restifyCorsMiddleware({
     origins: ['*'],
@@ -21,7 +20,6 @@ const cors = restifyCorsMiddleware({
 });
 
 // configure the server middleware
-
 server.pre(cors.preflight);
 server.use(cors.actual);
 server.use(restify.plugins.authorizationParser());
