@@ -11,7 +11,16 @@ var server = restify.createServer({
     name: 'iota-vault-api'
 });
 
+console.log(restify.plugins);
+
 // configure the server middleware
+server.use(
+    function CORS(req,res,next){
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "X-Requested-With");
+        return next();
+    }
+);
 server.use(restify.plugins.authorizationParser());
 server.use(restify.plugins.bodyParser());
 server.use(restify.plugins.queryParser());
