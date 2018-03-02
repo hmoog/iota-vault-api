@@ -2,6 +2,7 @@
 
 // requirements
 const restify = require('restify');
+const restifyCorsMiddleware = require('restify-cors-middleware');
 const twoFactorAuth = require('./middleware/twoFactorAuth')({maxDelta: 0});
 const seedEndPoint = require('./endpoints/seed');
 const digestEndPoint = require('./endpoints/digest');
@@ -11,16 +12,18 @@ var server = restify.createServer({
     name: 'iota-vault-api'
 });
 
-// configure the server middleware
-server.use(
-    function CORS(req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "X-Requested-With");
+console.log(restify.CORS);
+// configure our cors settings
+const cors = corsMiddleware({
+    origins: ['*'],
+    allowHeaders: ['API-Token'],
+    exposeHeaders: ['API-Token-Expiry']
+});
 
-        return next();
-    }
-);
-server.use(restify.plugins.fullResponse());
+// configure the server middleware
+
+server.pre(cors.preflight);
+server.use(cors.actual);
 server.use(restify.plugins.authorizationParser());
 server.use(restify.plugins.bodyParser());
 server.use(restify.plugins.queryParser());
