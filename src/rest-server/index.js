@@ -15,8 +15,7 @@ var server = restify.createServer({
 // configure our cors settings
 const cors = restifyCorsMiddleware({
     origins: ['*'],
-    allowHeaders: ['API-Token'],
-    exposeHeaders: ['API-Token-Expiry']
+    allowHeaders: ['Authorization']
 });
 
 // configure the server middleware
