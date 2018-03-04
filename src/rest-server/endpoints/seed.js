@@ -47,7 +47,14 @@ var create = function create(req, res, next) {
             }
 
             // generate the qrcode for the twofactor auth and send the response
-            QRCode.toDataURL(decodeURIComponent(twoFactorAuthDetails.uri) + '&issuer=' + encodeURIComponent('IOTA Vault'), { errorCorrectionLevel: 'H' }).then((qrcode) => {
+            QRCode.toDataURL(decodeURIComponent(twoFactorAuthDetails.uri) + '&issuer=' + encodeURIComponent('IOTA Vault'), {
+                errorCorrectionLevel: 'H',
+                scale: 2,
+                color: {
+                    dark: '#000000FF',  // Blue dots
+                    light: '#0000' // Transparent background
+                }
+            }).then((qrcode) => {
                 res.send({
                     code: 'Ok',
                     data: {
