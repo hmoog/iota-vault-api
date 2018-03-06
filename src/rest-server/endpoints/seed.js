@@ -51,7 +51,7 @@ var create = function create(req, res, next) {
                 errorCorrectionLevel: 'H',
                 scale: 3,
                 color: {
-                    dark: '#FFFFFFFF',  // Blue dots
+                    dark: '#000000FF',  // Blue dots
                     light: '#0000' // Transparent background
                 }
             }).then((qrcode) => {
