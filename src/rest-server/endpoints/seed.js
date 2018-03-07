@@ -50,6 +50,7 @@ var create = function create(req, res, next) {
             QRCode.toDataURL(decodeURIComponent(twoFactorAuthDetails.uri) + '&issuer=' + encodeURIComponent('IOTA Vault'), {
                 errorCorrectionLevel: 'H',
                 scale: 3,
+                margin:2,
                 color: {
                     dark: '#000000FF',  // Blue dots
                     light: '#0000' // Transparent background
