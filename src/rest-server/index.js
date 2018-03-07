@@ -21,7 +21,13 @@ const cors = restifyCorsMiddleware({
 // configure the server middleware
 server.pre(cors.preflight);
 server.use(cors.actual);
-server.use(restify.plugins.authorizationParser());
+server.use((req, res, next) => {
+    try {
+        restify.plugins.authorizationParser()(req, res, next)
+    } catch(error) {
+        next();
+    }
+});
 server.use(restify.plugins.bodyParser());
 server.use(restify.plugins.queryParser());
 
