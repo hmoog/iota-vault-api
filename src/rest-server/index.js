@@ -6,7 +6,7 @@ const restifyCorsMiddleware = require('restify-cors-middleware');
 const twoFactorAuth = require('./middleware/twoFactorAuth')({maxDelta: 0});
 const seedEndPoint = require('./endpoints/seed');
 const digestEndPoint = require('./endpoints/digest');
-const transactionEndpoint = require('./endpoints/transactionEndpoint');
+const transactionEndpoint = require('./endpoints/transaction');
 
 // setup the server
 var server = restify.createServer({
