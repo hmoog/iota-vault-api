@@ -9,7 +9,7 @@ var iota = new IOTA();
 
 // retrieve a signed transaction
 var retrieveOne = function retrieve(req, res, next) {
-    console.log(req.body);
+    console.log(req.body.inputs);
 
     // return our result
     res.send({
