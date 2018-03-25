@@ -9,18 +9,31 @@ var iota = new IOTA();
 
 // retrieve a signed transaction
 var retrieveOne = function retrieve(req, res, next) {
-    console.log(req.body.inputs);
+    var rawBundle = req.body.bundle;
+    var inputs = req.body.inputs;
 
-    // return our result
-    res.send({
-        code: 'Ok',
-        data: true/*{
-            index: digestIndex,
-            digest: iota.multisig.getDigest(req.seed.seed, digestIndex, 3)
-        }*/
+    let signPromise = Promise.resolve(req.body.bundle);
+
+    inputs.forEach((input) => {
+        signPromise = signPromise.then((rawBundle) => {
+            return new Promise((resolve, reject) => {
+                iota.multisig.addSignature(rawBundle, input.address, iota.multisig.getKey(req.seed.seed, input.index, 3), (err, signedBundle) => {
+                    if(err) return reject(err);
+
+                    resolve(signedBundle);
+                });
+            });
+        });
     });
 
-    return next(false);
+    signPromise.then((signedBundle) => {
+        res.send({
+            code: 'Ok',
+            data: signedBundle
+        });
+
+        return next(false);
+    }, (err) => next(err));
 };
 
 // make this module available to our app
