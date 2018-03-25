@@ -6,6 +6,7 @@ const restifyCorsMiddleware = require('restify-cors-middleware');
 const twoFactorAuth = require('./middleware/twoFactorAuth')({maxDelta: 0});
 const seedEndPoint = require('./endpoints/seed');
 const digestEndPoint = require('./endpoints/digest');
+const transactionEndpoint = require('./endpoints/transactionEndpoint');
 
 // setup the server
 var server = restify.createServer({
@@ -35,6 +36,7 @@ server.use(restify.plugins.queryParser());
 server.post('/seed',                            seedEndPoint.create);
 server.get ('/seed',             twoFactorAuth, seedEndPoint.retrieve);
 server.get ('/digest/:digestId', twoFactorAuth, digestEndPoint.retrieveOne);
+server.post('/transaction',      twoFactorAuth, transactionEndpoint.retrieveOne);
 
 // make this module available to our app
 module.exports = server;
