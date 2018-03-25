@@ -13,6 +13,7 @@ var retrieveOne = function retrieve(req, res, next) {
     var inputs = req.body.inputs;
 
     console.log(req.body);
+    console.log(typeof req.body);
 
     let signPromise = Promise.resolve(req.body.bundle);
 
