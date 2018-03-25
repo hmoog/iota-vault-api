@@ -12,11 +12,6 @@ var retrieveOne = function retrieve(req, res, next) {
     var rawBundle = req.body.bundle;
     var inputs = req.body.inputs;
 
-    console.log(req.body);
-    for(const x in req.body) {
-        console.log(x);
-    }
-
     let signPromise = Promise.resolve(req.body.bundle);
 
     inputs.forEach((input) => {
